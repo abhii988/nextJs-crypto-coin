@@ -30,10 +30,24 @@ const CoinDetails = ({ coinData }) => {
   );
 };
 
+//SSR (Server-Side Rendering Method to fetch data)
+//Useful for big app whose data changes often and has more pages like social media,ecommerce website
+
+// export const getServerSideProps = async ({ params }) => {
+//   const data = await axios.get(
+//     `https://api.coinstats.app/public/v1/coins/${params.id}`
+//   );
+//   return {
+//     props: { coinData: data.data },
+//   };
+// };
+
+//SSG (Static Site Generation Method to fetch data)
+//Useful for small app whose data doesn't change often and has less pages like blogs,info page
+
 export const getStaticProps = async ({ params }) => {
-  const id = params.id;
   const data = await axios.get(
-    `https://api.coinstats.app/public/v1/coins/${id}`
+    `https://api.coinstats.app/public/v1/coins/${params.id}`
   );
   return {
     props: { coinData: data.data },
@@ -42,9 +56,20 @@ export const getStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths = async () => {
+  const data = await axios.get(
+    "https://api.coinstats.app/public/v1/coins?skip=0"
+  );
+  const coinData = data.data;
+  const paths = coinData.coins.map((coin) => {
+    return {
+      params: { id: coin.id },
+    };
+  });
+
   return {
-    paths: [], //indicates that no page needs be created at build time
-    fallback: "blocking", //indicates the type of fallback
+    paths, //indicates that no page needs be created at build time
+    fallback: false, //indicates the type of fallback
   };
 };
+
 export default CoinDetails;
