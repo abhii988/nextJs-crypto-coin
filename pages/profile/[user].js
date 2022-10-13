@@ -13,9 +13,13 @@ const User = () => {
         <title>User: {user}</title>
       </Head>
       <h1>Hello &quot;{user}&quot;</h1>
+      <Link href="/profile">
+        <button>Go Back &#11013;</button>
+      </Link>
+      <hr />
       <h2>This is your Profile Page.</h2>
       <Link href="/">
-        <button>Home</button>
+        <button>Go Home {"\u2302"}</button>
       </Link>
     </div>
   );
