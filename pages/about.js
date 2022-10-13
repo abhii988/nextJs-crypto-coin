@@ -1,17 +1,19 @@
 import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
+import React from "react";
 import styles from "../styles/Home.module.css";
 
-export default function Home() {
+const About = () => {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Home Page</title>
+        <title>About Page</title>
       </Head>
-      <h1>Home Page</h1>
+      <h1>About Page</h1>
       <hr />
-      <h2>This is the Home Page.</h2>
+      <h2>This is the About Page.</h2>
     </div>
   );
-}
+};
+
+export default About;
