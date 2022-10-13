@@ -19,7 +19,7 @@ const User = () => {
       <hr />
       <h2>This is your Profile Page.</h2>
       <Link href="/">
-        <button>Go Home {"\u2302"}</button>
+        <button>Go Home {"\u2B1F"}</button>
       </Link>
     </div>
   );

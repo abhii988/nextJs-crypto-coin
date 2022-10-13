@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,7 +18,7 @@ const CoinList = ({ coinData }) => {
           </tr>
         </thead>
         <tbody>
-          {coinData.coins.slice(0, 25).map((coin, index) => {
+          {coinData.coins.slice(0, 50).map((coin, index) => {
             return (
               <tr key={index}>
                 <td>{index + 1}</td>
@@ -27,10 +26,9 @@ const CoinList = ({ coinData }) => {
                   <Link href={`/coins/${coin.id}`}>{coin.name}</Link>
                 </td>
                 <td>
-                  <img src={coin.icon} alt="img" width={50} height={50} />
+                  <Image src={coin.icon} alt="img" width={50} height={50} />
                 </td>
                 <td>${coin.price}</td>
-                {/* <td>{coin}</td> */}
               </tr>
             );
           })}
@@ -47,7 +45,6 @@ export const getStaticProps = async () => {
 
   return {
     props: { coinData: data.data },
-    revalidate: 10,
   };
 };
 
