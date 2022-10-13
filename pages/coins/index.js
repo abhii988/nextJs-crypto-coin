@@ -23,13 +23,8 @@ const CoinList = ({ coinData }) => {
             return (
               <tr key={index}>
                 <td>{index + 1}</td>
-                <td>
-                  <Link
-                    href={`/coins/${coin.id}`}
-                    style={{ textDecoration: "underline", color: "blue" }}
-                  >
-                    {coin.name}
-                  </Link>
+                <td style={{ textDecoration: "underline", color: "blue" }}>
+                  <Link href={`/coins/${coin.id}`}>{coin.name}</Link>
                 </td>
                 <td>
                   <img src={coin.icon} alt="img" width={50} height={50} />
