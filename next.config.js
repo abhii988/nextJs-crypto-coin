@@ -3,13 +3,14 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "static.coinstats.app",
-        pathname: "/coins/**",
-      },
-    ],
+    domains: ["static.coinstats.app"],
+    // remotePatterns: [
+    //   {
+    //     protocol: "https",
+    //     hostname: "static.coinstats.app",
+    //     pathname: "/coins/**",
+    //   },
+    // ],
   },
 };
 

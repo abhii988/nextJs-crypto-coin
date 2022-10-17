@@ -2,30 +2,49 @@ import axios from "axios";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 import styles from "../../styles/Home.module.css";
 
 const CoinDetails = ({ coinData }) => {
+  const router = useRouter();
+  if (router.isFallback) {
+    return (
+      <div
+        className={styles.cointainer}
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          margin: "-100px 0 0 -150px",
+        }}
+      >
+        <div className={styles.loader} />
+        <h1>Please Wait, Loading...</h1>
+      </div>
+    );
+  }
+  // console.log(coinData);
   return (
     <div className={styles.container}>
       <Head>
-        <title>{coinData.coin.name}</title>
+        <title>{coinData.name}</title>
       </Head>
 
-      <h1>Details of &quot;{coinData.coin.name}&quot; are:</h1>
+      <h1>Details of &quot;{coinData.name}&quot; are:</h1>
       <Link href="/coins">
         <button>Go Back &#11013;</button>
       </Link>
       <hr />
-      <h2>User Id: {coinData.coin.id}</h2>
-      <h2>Name: {coinData.coin.name}</h2>
-      <h2> Price: ${coinData.coin.price} </h2>
-      <h2> Rank: {coinData.coin.rank} </h2>
-      <h2> Symbol: {coinData.coin.symbol} </h2>
-      <h2> Price Change(1 week): {coinData.coin.priceChange1w} </h2>
-      <h2> Total Supply: {coinData.coin.totalSupply} </h2>
+      <h2>User Id: {coinData.id}</h2>
+      <h2>Name: {coinData.name}</h2>
+      <h2> Price: ${coinData.price} </h2>
+      <h2> Rank: {coinData.rank} </h2>
+      <h2> Symbol: {coinData.symbol} </h2>
+      <h2> Price Change(1 week): {coinData.priceChange1w} </h2>
+      <h2> Total Supply: {coinData.totalSupply} </h2>
       <h2>Image: </h2>
-      <Image src={coinData.coin.icon} alt="img" height={100} width={100} />
+      <Image src={coinData.icon} alt="img" height={100} width={100} />
     </div>
   );
 };
@@ -50,7 +69,7 @@ export const getStaticProps = async ({ params }) => {
     `https://api.coinstats.app/public/v1/coins/${params.id}`
   );
   return {
-    props: { coinData: data.data },
+    props: { coinData: data.data.coin },
     revalidate: 10,
   };
 };
@@ -60,7 +79,7 @@ export const getStaticPaths = async () => {
     "https://api.coinstats.app/public/v1/coins?skip=0"
   );
   const coinData = data.data;
-  const paths = coinData.coins.map((coin) => {
+  const paths = coinData.coins.slice(0, 25).map((coin) => {
     return {
       params: { id: coin.id },
     };
@@ -68,7 +87,7 @@ export const getStaticPaths = async () => {
 
   return {
     paths, //indicates that no page needs be created at build time
-    fallback: false, //indicates the type of fallback
+    fallback: true, //indicates the type of fallback
   };
 };
 

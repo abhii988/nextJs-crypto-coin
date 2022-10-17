@@ -18,7 +18,7 @@ const CoinList = ({ coinData }) => {
           </tr>
         </thead>
         <tbody>
-          {coinData.coins.slice(0, 50).map((coin, index) => {
+          {coinData.map((coin, index) => {
             return (
               <tr key={index}>
                 <td>{index + 1}</td>
@@ -44,7 +44,7 @@ export const getStaticProps = async () => {
   );
 
   return {
-    props: { coinData: data.data },
+    props: { coinData: data.data.coins.slice(0, 25) },
   };
 };
 
